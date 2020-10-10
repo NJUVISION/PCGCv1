@@ -113,8 +113,5 @@ You can set **alpha**, **beta**, etc to adjust loss function, and provide a pret
 - pytorch version & tensorflow2.0 version.
 - training again.
 
-## Bug Report
-- The decoding error on GPU sometimes. (no error on CPU)
-
 ### Authors
 These files are provided by Nanjing University [Vision Lab](http://vision.nju.edu.cn/). And thanks for the help from SJTU Cooperative Medianet Innovation Center. Please contact us (wangjq@smail.nju.edu.cn) if you have any questions. 

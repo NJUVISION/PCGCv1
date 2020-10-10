@@ -5,8 +5,6 @@
 
 
 # Copyright (c) Nanjing University, Vision Lab.
-# Jianqiang Wang (wangjq@smail.nju.edu.cn), Hao Zhu, Zhan Ma, Tong Chen, Haojie Liu, Qiu Shen; Nanjing University, Vision Lab.
-# Chaofei Wang; Shanghai Jiao Tong University, Cooperative Medianet Innovation Center.
 # Last update: 2019.10.27
 # 2019.11.14
 
