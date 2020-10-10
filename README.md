@@ -1,6 +1,6 @@
 # Learned Point Cloud Geometry Compression
 ___
-Jianqiang Wang, Hao Zhu, Zhan Ma, Tong Chen, Haojie Liu, Qiu Shen.  **[[arXiv]](https://arxiv.org/abs/1909.12037)**
+Jianqiang Wang, Hao Zhu, Haojie Liu, Zhan Ma.  **[[arXiv]](https://arxiv.org/abs/1909.12037)**
 <p align="center">
   <img src="figs/intro.png?raw=true" alt="introduction" width="800"/> (a)
 
