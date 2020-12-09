@@ -2,7 +2,7 @@
 ___
 Jianqiang Wang, Hao Zhu, Haojie Liu, Zhan Ma.  **[[arXiv]](https://arxiv.org/abs/1909.12037)**
 
-<font color=red size=5> PCGCv2: Multiscale Point CLoud Geometry Compression **[[arXiv]](https://arxiv.org/abs/2011.03799)**  **[[github]](Multiscale Point Cloud Geometry Compression)**</font>
+<font color=red size=5> PCGCv2: Multiscale Point CLoud Geometry Compression </font> **[[arXiv]](https://arxiv.org/abs/2011.03799)**  **[[github]](Multiscale Point Cloud Geometry Compression)**
 
 <p align="center">
   <img src="figs/intro.png?raw=true" alt="introduction" width="800"/> (a)
