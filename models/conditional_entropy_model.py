@@ -43,6 +43,7 @@ class SymmetricConditional(tf.keras.layers.Layer):
     # CDF.
     upper = inputs + .5
     lower = inputs - .5
+
     sign = tf.math.sign(upper + lower - loc)
     upper = - sign * (upper - loc) + loc
     lower = - sign * (lower - loc) + loc
@@ -109,7 +110,11 @@ class SymmetricConditional(tf.keras.layers.Layer):
 
     loc = tf.expand_dims(loc, -1)
     scale = tf.expand_dims(scale, -1)
+
     likelihood = self._likelihood(a, loc, scale)
+
+
+
     likelihood_bound = tf.constant(self._likelihood_bound, dtype=self.dtype)
     likelihood = tf.maximum(likelihood, likelihood_bound)
     pmf = likelihood

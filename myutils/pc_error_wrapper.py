@@ -52,7 +52,6 @@ def pc_error(infile1, infile2, normal1, res, show=False):
                           ' --hausdorff=1 '+ 
                           ' --resolution='+str(res-1))
 
-
     results = {}
    
     start = time.time()

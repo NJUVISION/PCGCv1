@@ -4,12 +4,11 @@
 import numpy as np
 import os
 
-
+################### plyfile <--> points ####################
 def load_ply_data(filename):
   '''
   load data from ply file.
   '''
-
   f = open(filename)
   #1.read all points
   points = []
@@ -45,6 +44,8 @@ def write_ply_data(filename, points):
   f.close() 
 
   return
+
+#################### plyfile <--> partition points ####################
 
 def load_points(filename, cube_size=64, min_num=20):
   """Load point cloud & split to cubes.
@@ -110,6 +111,8 @@ def save_points(set_points, cube_positions, filename, cube_size=64):
 
   return
 
+#################### points <--> volumetric models ####################
+
 def points2voxels(set_points, cube_size):
   """Transform points to voxels (binary occupancy map).
   Args: points list; cube size;
@@ -139,14 +142,76 @@ def voxels2points(voxels):
   
   return set_points
 
+#################### select top-k voxels of volumetric model ####################
+
+def select_voxels(vols, points_nums, offset_ratio=1.0, fixed_thres=None):
+  '''Select the top k voxels and generate the mask.
+  input:  vols: [batch_size, vsize, vsize, vsize, 1] float32
+          points numbers: [batch_size]
+  output: the mask (0 or 1) representing the selected voxels: [batch_size, vsize, vsize, vsize]  
+  '''
+  # vols = vols.numpy()
+  # points_nums = points_nums
+  # offset_ratio = offset_ratio
+  masks = []
+  for idx, vol in enumerate(vols):
+    if fixed_thres==None:
+      num = int(offset_ratio * np.array(points_nums[idx]))
+      thres = get_adaptive_thres(vol, num)
+    else:
+      thres = fixed_thres
+    # print(thres)
+    # mask = np.greater(vol, thres).astype('float32')
+    mask = np.greater_equal(vol, thres).astype('float32')
+    masks.append(mask)
+
+  return np.stack(masks)
+
+def get_adaptive_thres(vol, num, init_thres=-2.0):
+  values = vol[vol>init_thres]
+  # number of values should be larger than expected number.
+  if values.shape[0] < num:
+    values = np.reshape(vol, [-1])
+  # only sort the selected values.
+  values.sort()
+  thres = values[-num]
+
+  return thres
+
 
 if __name__=='__main__':
-  name = '../testdata/8iVFB/loot_vox10_1200.ply'
-  name_rec = 'rec.ply'
-  set_points, cube_positions = load_points(name, cube_size=64, min_num=20)
-  voxels = points2voxels(set_points, cube_size=64)
+  import argparse
+  parser = argparse.ArgumentParser(
+    formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+  parser.add_argument(
+    "--input", type=str, default='../../testdata/8iVFB/redandblack_vox10_1550_n.ply', dest="input")
+  parser.add_argument(
+    "--output", type=str, default='rec.ply', dest="output")
+  parser.add_argument(
+    "--cube_size", type=int, default=64, dest="cube_size",
+    help="size of partitioned cubes.")
+  parser.add_argument(
+    "--min_num", type=int, default=20, dest="min_num",
+    help="minimum number of points in a cube.")
+  args = parser.parse_args()
+  print(args)
+
+  ################### test top-k voxels selection #########################
+  data = np.random.rand(4, 64, 64, 64, 1) * (100) -50
+  points_nums = np.array([1000, 200, 10000, 50])
+  offset_ratio = 1.0 
+  init_thres = -1.0
+  mask = select_voxels(data, points_nums, offset_ratio, init_thres)   
+  print(mask.shape)
+
+  ################### inout #########################
+  set_points, cube_positions = load_points(args.input, 
+                                          cube_size=args.cube_size, 
+                                          min_num=args.min_num)
+  voxels = points2voxels(set_points, cube_size=args.cube_size)
   print('voxels:',voxels.shape)
   points_rec = voxels2points(voxels)
-  save_points(points_rec, cube_positions, name_rec, cube_size=64)
+  save_points(points_rec, cube_positions, args.output, cube_size=args.cube_size)
   os.system("../myutils/pc_error_d" \
-  + ' -a ' + name + ' -b ' + name_rec + " -r 1023")
+  + ' -a ' + args.input + ' -b ' + args.output + " -r 1023")
+  os.system("rm "+args.output)

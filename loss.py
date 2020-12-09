@@ -78,6 +78,52 @@ def get_classify_metrics(pred, label, th=0.):
   return precision, recall, IoU
 
 
+import tensorflow.keras.backend as K
+
+def get_focal_loss(y_pred, y_true, gamma=2, alpha=0.9):
+  """
+  https://github.com/mauriceqch/pcc_geo_cnn
+  """
+  pt_1 = tf.where(tf.equal(y_true, 1), y_pred, tf.ones_like(y_pred))
+  pt_0 = tf.where(tf.equal(y_true, 0), y_pred, tf.zeros_like(y_pred))
+
+  pt_1 = K.clip(pt_1, 1e-3, .999)
+  pt_0 = K.clip(pt_0, 1e-3, .999)
+
+  return -K.sum(alpha * K.pow(1. - pt_1, gamma) * K.log(pt_1)) - K.sum((1-alpha) * K.pow( pt_0, gamma) * K.log(1. - pt_0))
+
+# def get_focal_loss(pred, label):
+#     '''
+#         input: [batch, size, size, size, size, 1]
+#         loss for geometry compression.
+# 	https://arxiv.org/pdf/1708.02002.pdf
+#     '''
+#     # occupancy = pred
+#     occupancy = tf.clip_by_value(tf.sigmoid(pred), 1e-7, 1.0 - 1e-7)
+
+#     # 1. location loss
+#     # get position from label
+#     position_neg = tf.cast(tf.equal(tf.reduce_max(label, axis=-1), 0), 'int8')
+#     position_pos = tf.cast(tf.greater(tf.reduce_max(label, axis=-1), 0), 'int8')
+#     # get position of pred
+#     position_neg = tf.where(position_neg>0)
+#     position_pos = tf.where(position_pos>0)
+#     # get occupancy value
+#     occupancy_neg = tf.gather_nd(occupancy, position_neg) 
+#     occupancy_pos = tf.gather_nd(occupancy, position_pos) 
+#     # get loss
+#     gamma = 2.
+
+#     empty_loss = tf.reduce_mean(tf.negative( \
+#     (occupancy_neg ** gamma) * \
+#     tf.log(1.0 - occupancy_neg)))
+
+#     full_loss = tf.reduce_mean(tf.negative( \
+#     ((1-occupancy_pos) ** gamma) * \
+#     tf.log(occupancy_pos)))
+    
+#     return empty_loss, full_loss
+
 if __name__=='__main__':
   np.random.seed(108)
   data = np.random.rand(2, 64, 64, 64, 1)* 10 - 5

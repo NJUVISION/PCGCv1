@@ -90,6 +90,20 @@ def sample_points(root_mesh_dir, root_points_dir, n_points, resolution):
 
 
 if __name__ == "__main__":
+  import argparse
+
+  parser = argparse.ArgumentParser(
+      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+  parser.add_argument("--input", type=str, nargs='+', default='', dest="input")
+  parser.add_argument("--rootdir", type=str, default='results/hyper/', dest="rootdir")
+  parser.add_argument("--cfgdir", type=str, default='results/hyper/8iVFB_vox10.ini', dest="cfgdir")
+  parser.add_argument("--res", type=int, default=255, dest="res")
+  parser.add_argument("--mode", type=str, default='hyper', dest="mode")
+
+  args = parser.parse_args()
+  print(args)
+  return args
+
   n_points = int(4e5)
   resolution = 255
   root_mesh_dir = '/home/ubuntu/HardDisk1/ShapeNetCore.v2/02747177/1b7d468a27208ee3dad910e221d16b18/models/'
