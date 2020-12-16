@@ -45,12 +45,22 @@ Please refer to `demo.ipynb` for each step.
 ### **Evaluation**
 ```shell
  python eval.py --input "testdata/8iVFB/longdress_vox10_1300.ply" \
-                --rootdir="results/hyper/longdress/" \
+                --rootdir="results/hyper/" \
                 --cfgdir="results/hyper/8iVFB_vox10.ini" \
                 --res=1024
 ```
 
-The results can be downloaded in http://yun.nju.edu.cn/f/b413edb458/
+Different parameters are required for different dataset, for example:
+
+```shell
+ python eval.py --input "testdata/Sparse/House_without_roof_00057_vox12.ply" \
+                --rootdir "results/hyper/" \
+                --cfgdir "results/hyper/House_without_roof_00057_vox12.ini" \
+                --res=4096
+```
+
+The detailed cfgs and results can be downloaded in http://yun.nju.edu.cn/f/1a6426ffba/
+And several examples of decoded point clouds can be download in http://yun.nju.edu.cn/d/b2c9854fb6/
 
 ---
 ### Training
@@ -100,10 +110,17 @@ python train_factorized.py --alpha=2  \
 - 2020.06.27 python3 & clean up.
 - 2020.10.03 open source.
 - 2020.12.09 ablation studies & experiment configuration.
+- 2020.12.16 add some examples of decoded point clouds.
 
 ## Todo
 - pytorch version & tensorflow2.0 version.
 - training again.
+
+## Issues
+- Error on GPU: sometimes the point clouds may fail to decode correctly due to the randomness on GPU. 
+  You can test on CPU by setting os.environ['CUDA_VISIBLE_DEVICES']="" in "evel.py".
+  Or encode and decode at the same time,  see "compress_hyper" in "transform.py".
+
 
 ### Authors
 These files are provided by Nanjing University [Vision Lab](http://vision.nju.edu.cn/). And thanks for the help from SJTU Cooperative Medianet Innovation Center. Please contact us (wangjq@smail.nju.edu.cn) if you have any questions. 

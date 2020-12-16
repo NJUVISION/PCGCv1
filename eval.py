@@ -20,6 +20,7 @@ import argparse
 import importlib 
 # from numba import cuda
 tf.enable_eager_execution()
+# os.environ['TF_DETERMINISTIC_OPS'] = '1'
 
 from process import preprocess, postprocess
 # import models.model_voxception as model
@@ -35,7 +36,7 @@ cfg = tf.ConfigProto()
 cfg.gpu_options.per_process_gpu_memory_fraction = 1.0
 cfg.gpu_options.allow_growth = True
 cfg.log_device_placement=True
-# config.device_count={'gpu':0}
+# cfg.device_count={'gpu':0}
 sess = tf.Session(config=cfg)
 
 from myutils.pc_error_wrapper import pc_error
@@ -94,6 +95,7 @@ def test_hyper(input_file, model, ckpt_dir, scale, cube_size, min_num, postfix='
                                 y_shape_d, z_strings_d, z_min_v_d, z_max_v_d, z_shape_d, model, ckpt_dir)
     # cheat!!!
     ##############
+    print("decoding error on gpu", "!"*20, np.max(tf.abs(cubes_d-x_ds).numpy()), "!"*20)
     cubes_d = x_ds
     ##############
     # bpp
@@ -161,7 +163,6 @@ def eval(input_file, rootdir, cfgdir, res, mode, cube_size, modelname, fixed_thr
     model = importlib.import_module(modelname)
 
     filename = os.path.split(input_file)[-1][:-4]
-    output_file = filename + '_rec_' + postfix + '.ply'
     input_file_n = input_file    
     csv_rootdir = rootdir
     if not os.path.exists(csv_rootdir):
@@ -191,14 +192,17 @@ def eval(input_file, rootdir, cfgdir, res, mode, cube_size, modelname, fixed_thr
 
         # metrics.
         rho = 1.0
+        output_file = filename + '_rec_' + str(rate) + '_' + 'rho' + str(round(rho*100)) + postfix + '.ply'
         postprocess(output_file, cubes_d, points_numbers, cube_positions, scale, cube_size, rho, fixed_thres)
         results = pc_error(input_file, output_file, input_file_n, res, show=False)
 
         rho = rho_d1
+        output_file = filename + '_rec_' + str(rate) + '_' + 'rho' + str(round(rho*100)) + postfix + '.ply'
         postprocess(output_file, cubes_d, points_numbers, cube_positions, scale, cube_size, rho, fixed_thres)
         results_d1 = pc_error(input_file, output_file, input_file_n, res, show=False)
 
         rho = rho_d2
+        output_file = filename + '_rec_' + str(rate) + '_' + 'rho' + str(round(rho*100)) + postfix + '.ply'
         postprocess(output_file, cubes_d, points_numbers, cube_positions, scale, cube_size, rho, fixed_thres)
         results_d2 = pc_error(input_file, output_file, input_file_n, res, show=False)
          
@@ -222,7 +226,7 @@ def parse_args():
     parser.add_argument("--input", type=str, nargs='+', default='', dest="input")
     parser.add_argument("--rootdir", type=str, default='results/hyper/', dest="rootdir")
     parser.add_argument("--cfgdir", type=str, default='results/hyper/8iVFB_vox10.ini', dest="cfgdir")
-    parser.add_argument("--res", type=int, default=256, dest="res")
+    parser.add_argument("--res", type=int, default=1024, dest="res")
     parser.add_argument("--mode", type=str, default='hyper', dest="mode")
 
     parser.add_argument("--cube_size", type=int, default=64, dest="cube_size")
