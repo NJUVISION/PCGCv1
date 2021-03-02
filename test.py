@@ -29,8 +29,8 @@ def parse_args():
                             "and writes compressed binary files. 'decompress' "
                             "reads binary files and reconstructs the point cloud (.ply format). "
                             "input and output filenames need to be provided for the latter. ")
-    parser.add_argument("input", nargs="?", help="Input filename.")
-    parser.add_argument("output", nargs="?", help="Output filename.")
+    parser.add_argument("input", nargs="?", help="Input filepath.")
+    parser.add_argument("output", nargs="?", help="Output filepath.")
     parser.add_argument("--mode", type=str, default='hyper', dest="mode", help='factorized entropy model or hyper prior')
     parser.add_argument("--modelname", default="models.model_voxception", dest="modelname", help="(model_simple, model_voxception)")
     parser.add_argument("--ckpt_dir", type=str, default='', dest="ckpt_dir",  help='checkpoint')
@@ -77,8 +77,11 @@ if __name__ == "__main__":
             strings, min_v, max_v, shape = compress_factorized(cubes, model, args.ckpt_dir)
             if not args.output:
                 args.output = os.path.split(args.input)[-1][:-4]
+                rootdir = './compressed'
+            else:
+                rootdir, args.output = os.path.split(args.output)
             bytes_strings, bytes_pointnums, bytes_cubepos = write_binary_files_factorized(
-                args.output, strings.numpy(), points_numbers, cube_positions, min_v.numpy(), max_v.numpy(), shape.numpy(), rootdir='./compressed')
+                args.output, strings.numpy(), points_numbers, cube_positions, min_v.numpy(), max_v.numpy(), shape.numpy(), rootdir=rootdir)
 
         elif args.command == "decompress":
             rootdir, filename = os.path.split(args.input)
@@ -92,6 +95,9 @@ if __name__ == "__main__":
         if args.command == "compress":
             if not args.output:
                 args.output = os.path.split(args.input)[-1][:-4]
+                rootdir = './compressed'
+            else:
+                rootdir, args.output = os.path.split(args.output)
 
             cubes, cube_positions, points_numbers = preprocess(args.input, args.scale, args.cube_size, args.min_num)
  
@@ -100,7 +106,7 @@ if __name__ == "__main__":
             bytes_strings, bytes_strings_head, bytes_strings_hyper, bytes_pointnums, bytes_cubepos = write_binary_files_hyper(
                 args.output, y_strings.numpy(), z_strings.numpy(), points_numbers, cube_positions,
                 y_min_vs.numpy(), y_max_vs.numpy(), y_shape.numpy(), 
-                z_min_v.numpy(), z_max_v.numpy(), z_shape.numpy(), rootdir='./compressed')
+                z_min_v.numpy(), z_max_v.numpy(), z_shape.numpy(), rootdir=rootdir)
 
         elif args.command == "decompress":
             rootdir, filename = os.path.split(args.input)
