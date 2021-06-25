@@ -16,9 +16,9 @@ Jianqiang Wang, Hao Zhu, Haojie Liu, Zhan Ma.  **[[arXiv]](https://arxiv.org/abs
 - ubuntu16.04
 -  python3
 - tensorflow-gpu=1.13.1
-- Pretrained models: http://yun.nju.edu.cn/f/2a54abc9e8/
-- ShapeNet Dataset: http://yun.nju.edu.cn/f/6d39b9cba0/
-- Test data: http://yun.nju.edu.cn/f/e200741271/
+- Pretrained models: https://box.nju.edu.cn/f/6c8dc9cba74f4f888925/
+- ShapeNet Dataset: http://yun.nju.edu.cn/f/6d39b9cba0/ (todo)
+- Test data: https://box.nju.edu.cn/f/7728b9f160a842f0b9fe/
 
 ## Usage 
 
@@ -59,8 +59,8 @@ Different parameters are required for different dataset, for example:
                 --res=4096
 ```
 
-The detailed cfgs and results can be downloaded in http://yun.nju.edu.cn/f/1a6426ffba/
-And several examples of decoded point clouds can be download in http://yun.nju.edu.cn/d/b2c9854fb6/
+The detailed cfgs and results can be downloaded in https://box.nju.edu.cn/f/b78aeedc0453442aafe5/
+And several examples of decoded point clouds can be download in https://box.nju.edu.cn/d/f6a6f8ae61c94cea9248/
 
 ---
 ### Training
@@ -71,11 +71,11 @@ sampling points from meshes, here we use **pyntcloud** (pip install pyntcloud)
 cd dataprocess
 python mesh2pc.py
 ```
-The output point clouds can be download in http://yun.nju.edu.cn/d/227493a5bd/
+The output point clouds can be download in http://yun.nju.edu.cn/d/227493a5bd/ (todo)
 ```shell
 python generate_dataset.py
 ```
-the output training dataset can be download in http://yun.nju.edu.cn/d/604927e275/
+the output training dataset can be download in http://yun.nju.edu.cn/d/604927e275/ (todo)
 
 --- 
 #### **Training**
