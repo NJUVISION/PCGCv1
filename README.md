@@ -18,7 +18,8 @@ Jianqiang Wang, Hao Zhu, Haojie Liu, Zhan Ma.  **[[arXiv]](https://arxiv.org/abs
 - tensorflow-gpu=1.13.1
 - Pretrained models: https://box.nju.edu.cn/f/69939cfd71524d59b931/
 - ShapeNet Dataset: http://yun.nju.edu.cn/f/6d39b9cba0/ (todo)
-- Test data: https://box.nju.edu.cn/f/7728b9f160a842f0b9fe/
+- Test data: https://box.nju.edu.cn/f/7a800a3ef1464ae78f3c/
+
 
 ## Usage 
 
