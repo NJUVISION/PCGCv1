@@ -1,8 +1,9 @@
 # Learned Point Cloud Geometry Compression
 ___
+**This project is no longer maintained, please use the updated version: https://github.com/NJUVISION/PCGCv2 and our latest work: https://github.com/NJUVISION/SparsePCGC**
+
 Jianqiang Wang, Hao Zhu, Haojie Liu, Zhan Ma.  **[[arXiv]](https://arxiv.org/abs/1909.12037)**
 
-<font color=red size=5> PCGCv2: Multiscale Point CLoud Geometry Compression </font> **[[arXiv]](https://arxiv.org/abs/2011.03799)**  **[[github]](https://github.com/NJUVISION/PCGCv2)**
 
 <p align="center">
   <img src="figs/intro.png?raw=true" alt="introduction" width="800"/> (a)
@@ -112,6 +113,7 @@ python train_factorized.py --alpha=2  \
 - 2020.10.03 open source.
 - 2020.12.09 ablation studies & experiment configuration.
 - 2020.12.16 add some examples of decoded point clouds.
+- 2021.01.01 the paper was published on TCSVT. (Wang, J., Zhu, H., Liu, H., & Ma, Z. (2021). Lossy Point Cloud Geometry Compression via End-to-End Learning. IEEE Transactions on Circuits and Systems for Video Technology, 31, 4909-4923.)
 
 ## Todo
 - pytorch version & tensorflow2.0 version.
