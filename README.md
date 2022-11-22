@@ -17,9 +17,9 @@ Jianqiang Wang, Hao Zhu, Haojie Liu, Zhan Ma.  **[[arXiv]](https://arxiv.org/abs
 - ubuntu16.04
 - python3
 - tensorflow-gpu=1.13.1
-- Pretrained models: https://box.nju.edu.cn/f/69939cfd71524d59b931/
-- ShapeNet Dataset: http://yun.nju.edu.cn/f/6d39b9cba0/ (todo)
-- Test data: https://box.nju.edu.cn/f/7a800a3ef1464ae78f3c/
+- Pretrained models: https://box.nju.edu.cn/f/19f915f4be0643fc8862/
+- ShapeNet Dataset: http://yun.nju.edu.cn/f/6d39b9cba0/
+- Test data: https://box.nju.edu.cn/f/5ab2aa4dfd9941f5aaae/
 
 
 ## Usage 
@@ -73,11 +73,11 @@ sampling points from meshes, here we use **pyntcloud** (pip install pyntcloud)
 cd dataprocess
 python mesh2pc.py
 ```
-The output point clouds can be download in http://yun.nju.edu.cn/d/227493a5bd/ (todo)
+The output point clouds can be download in http://yun.nju.edu.cn/d/227493a5bd/
 ```shell
 python generate_dataset.py
 ```
-the output training dataset can be download in http://yun.nju.edu.cn/d/604927e275/ (todo)
+the output training dataset can be download in http://yun.nju.edu.cn/d/604927e275/
 
 --- 
 #### **Training**
@@ -100,24 +100,13 @@ python train_factorized.py --alpha=2  \
 </center>
 
 ## Update
-- 2019.10.09 initial smbmission.
-- 2019.10.22 submit demos, several pretrained models and training datasets.
-- 2019.10.27 submit all pretrained models and evaluate on 8i voxelized full bodies.
-- 2019.11.14 check bug and start testing on AVS PCC Cat3.
-- 2019.11.15 test point cloud sequences using avs metric tool. (thanks for the help from Wei Yan)
-- 2019.11.19 finish testing AVS Cat3.
-- 2019.11.20 test AVS Cat2.
-- 2019.11.26 test AVS single frame.
-- 2019.11.31 doc.
-- 2020.06.27 python3 & clean up.
-- 2020.10.03 open source.
-- 2020.12.09 ablation studies & experiment configuration.
-- 2020.12.16 add some examples of decoded point clouds.
 - 2021.01.01 the paper was published on TCSVT. (Wang, J., Zhu, H., Liu, H., & Ma, Z. (2021). Lossy Point Cloud Geometry Compression via End-to-End Learning. IEEE Transactions on Circuits and Systems for Video Technology, 31, 4909-4923.)
+- 2020.10.03 open source.
+- 2020.02.20 smbmit to TCSVT.
+- 2019.11.14 submit to AVS PCC (continue to study in EE).
+- 2019.10.09 submit to TIP. (rejected)
+- 2019.04.29 submit to BMVC-2019. (rejected)
 
-## Todo
-- pytorch version & tensorflow2.0 version.
-- training again.
 
 ## Issues
 - Error on GPU: sometimes the point clouds may fail to decode correctly due to the randomness on GPU. 
@@ -126,4 +115,4 @@ python train_factorized.py --alpha=2  \
 
 
 ### Authors
-These files are provided by Nanjing University [Vision Lab](http://vision.nju.edu.cn/). And thanks for the help from SJTU Cooperative Medianet Innovation Center. Please contact us (wangjq@smail.nju.edu.cn) if you have any questions. 
+These files are provided by Nanjing University [Vision Lab](http://vision.nju.edu.cn/). Thanks for the help from SJTU Cooperative Medianet Innovation Center. Please contact us (wangjq@smail.nju.edu.cn) if you have any questions. 
